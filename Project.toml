@@ -1,0 +1,7 @@
+name = "NonSmoothDynamics"
+uuid = "8d87df4a-0602-5753-9075-02367bcbd96d"
+authors = ["Tangi Migot <tangi.migot@gmail.com>"]
+version = "0.1.0"
+
+[compat]
+julia = "1.10"

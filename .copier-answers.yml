@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier
+AnswerStrategy: recommended
+Authors: Tangi Migot <tangi.migot@gmail.com>
+CodeOfConductContact: tangi.migot@gmail.com
+ConfigIndentation: 2
+JuliaIndentation: 2
+JuliaMinVersion: '1.10'
+License: MIT
+LicenseCopyrightHolders: Tangi Migot
+MarkdownIndentation: 2
+PackageName: NonSmoothDynamics
+PackageOwner: tmigot
+PackageUUID: 8d87df4a-0602-5753-9075-02367bcbd96d
+_commit: v0.14.1
+_src_path: https://github.com/JuliaBesties/BestieTemplate.jl
