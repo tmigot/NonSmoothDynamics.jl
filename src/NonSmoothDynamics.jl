@@ -1,11 +1,15 @@
 module NonSmoothDynamics
 
-"""
-    hi = hello_world()
-A simple function to return "Hello, World!"
-"""
-function hello_world()
-    return "Hello, World!"
-end
+using LinearAlgebra
+
+include("projection/project.jl")
+include("projection/projection_plot.jl")
+include("projection/projection_intersection.jl")
+
+using Interpolations
+
+include("interpolation.jl")
+
+include("pds.jl")
 
 end
