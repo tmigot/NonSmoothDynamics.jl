@@ -3,7 +3,7 @@
                          Ain::AbstractMatrix, bin::AbstractVector,
                          l::Vector{Float64}, u::Vector{Float64}) -> Vector{Float64}
 
-Computes the numerical projection of a vector `x` onto a constrained set defined by 
+Computes the numerical projection of a vector `x` onto a constrained set defined by
 equality and inequality constraints, as well as variable bounds.
 
 # Arguments
@@ -36,17 +36,25 @@ proj_x = numerical_projection(x, Aeq, beq, Ain, bin, l, u)
 println("Projected x: ", proj_x)
 ```
 """
-function numerical_projection(x::Vector{Float64}, Aeq, beq, Ain, bin, l::Vector{Float64}, u::Vector{Float64})
-    n, m = length(x), length(bin)
-    lcon = vcat(beq, -Inf * ones(m))
-    ucon = vcat(beq, bin)
+function numerical_projection(
+  x::Vector{Float64},
+  Aeq,
+  beq,
+  Ain,
+  bin,
+  l::Vector{Float64},
+  u::Vector{Float64},
+)
+  n, m = length(x), length(bin)
+  lcon = vcat(beq, -Inf * ones(m))
+  ucon = vcat(beq, bin)
 
-    # Combine equality and inequality constraints into bounds
-lcon = vcat(beq, -Inf * ones(m))  # Lower bounds for constraints
-ucon = vcat(beq, bin)             # Upper bounds for constraints
+  # Combine equality and inequality constraints into bounds
+  lcon = vcat(beq, -Inf * ones(m))  # Lower bounds for constraints
+  ucon = vcat(beq, bin)             # Upper bounds for constraints
 
-# Define the non-linear least squares model
-nls = ADNLSModel(
+  # Define the non-linear least squares model
+  nls = ADNLSModel(
     x,                                      # Initial guess
     d -> norm(x - d)^2,                    # Objective: minimize distance to x
     n,                                     # Number of variables
@@ -54,12 +62,12 @@ nls = ADNLSModel(
     lcon,                                  # Combined lower constraint bounds
     ucon,                                  # Combined upper constraint bounds
     l,                                     # Variable lower bounds
-    u                                      # Variable upper bounds
-)
+    u,                                      # Variable upper bounds
+  )
 
-# Solve the problem using IPOPT
-stats = ipopt(nls)
+  # Solve the problem using IPOPT
+  stats = ipopt(nls)
 
-# Return the projected solution
-return nls.solution
+  # Return the projected solution
+  return nls.solution
 end
