@@ -30,31 +30,36 @@ println("Projection: ", x)
 println("Converged: ", converged, " in ", num_iter, " iterations.")
 ```
 """
-function boyle_dykstra(x0::Vector{Float64}, projections::Vector{Function}; tol::Float64=1e-6, max_iter::Int=1000)
-m = length(projections) # Number of projection functions
-x = copy(x0) # Current point
-corrections = [zeros(length(x0)) for _ in 1:m] # Correction terms for each projection
-for iter in 1:max_iter
+function boyle_dykstra(
+  x0::Vector{Float64},
+  projections::Vector{Function};
+  tol::Float64 = 1e-6,
+  max_iter::Int = 1000,
+)
+  m = length(projections) # Number of projection functions
+  x = copy(x0) # Current point
+  corrections = [zeros(length(x0)) for _ = 1:m] # Correction terms for each projection
+  for iter = 1:max_iter
     x_old = copy(x)
 
     # Cycle through each projection function
-    for k in 1:m
-        # Apply projection with correction
-        y_k = projections[k](x + corrections[k])
+    for k = 1:m
+      # Apply projection with correction
+      y_k = projections[k](x + corrections[k])
 
-        # Update the correction term
-        corrections[k] = x + corrections[k] - y_k
+      # Update the correction term
+      corrections[k] = x + corrections[k] - y_k
 
-        # Update the current point
-        x = y_k
+      # Update the current point
+      x = y_k
     end
 
     # Check for convergence
     if norm(x - x_old) < tol
-        return x, iter, true
+      return x, iter, true
     end
-end
+  end
 
-# If max iterations are reached without convergence
-return x, max_iter, false
+  # If max iterations are reached without convergence
+  return x, max_iter, false
 end

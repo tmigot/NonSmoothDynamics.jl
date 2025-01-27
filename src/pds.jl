@@ -3,7 +3,7 @@
                                step_size::Float64=0.01, max_iter::Int=1000, tol::Float64=1e-6)
 
 Simulates the discretized dynamics of a Projected Dynamical System (PDS):
-    x(t+1) = P_C(x(t) - step_size * F(x(t)))
+    x(t+1) = P_{T_C}(x(t) - step_size * F(x(t)))
 
 # Arguments
 - `x0::Vector{Float64}`: Initial state (starting point within the set C).
@@ -36,27 +36,34 @@ println("Final State: ", x_vals[:, end])
 println("Converged: ", converged, " in ", num_iter, " iterations.")
 ```
 """
-function projected_dynamical_system(x0::Vector{Float64}, F::Function, project_C::Function; step_size::Float64=0.01, max_iter::Int=1000, tol::Float64=1e-6)
-    # Initialize variables
-    x = copy(x0)
-    x_vals = [x] # Store the trajectory
-    converged = false
-    iter = 0
-    for iter in 1:max_iter
-        # Compute the update step: x(t+1) = P_C(x(t) - step_size * F(x(t)))
-        x_new = project_C(x - step_size * F(x))
-        push!(x_vals, x_new)
-    
-        # Check for convergence
-        if norm(x_new - x) < tol
-            converged = true
-            break
-        end
-    
-        # Update for the next iteration
-        x = x_new
+function projected_dynamical_system(
+  x0::Vector{Float64},
+  F::Function,
+  project_C::Function;
+  step_size::Float64 = 0.01,
+  max_iter::Int = 1000,
+  tol::Float64 = 1e-6,
+)
+  # Initialize variables
+  x = copy(x0)
+  x_vals = [x] # Store the trajectory
+  converged = false
+  iter = 0
+  for iter = 1:max_iter
+    # Compute the update step:
+    x_new = project_C(x - step_size * F(x))
+    push!(x_vals, x_new)
+
+    # Check for convergence
+    if norm(x_new - x) < tol
+      converged = true
+      break
     end
-    
-    # Return trajectory, iterations, and convergence status
-    return hcat(x_vals...), iter, converged
+
+    # Update for the next iteration
+    x = x_new
+  end
+
+  # Return trajectory, iterations, and convergence status
+  return hcat(x_vals...), iter, converged
 end

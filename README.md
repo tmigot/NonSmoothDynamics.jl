@@ -12,6 +12,24 @@
 [![All Contributors](https://img.shields.io/github/all-contributors/tmigot/NonSmoothDynamics.jl?labelColor=5e1ec7&color=c0ffee&style=flat-square)](#contributors)
 [![BestieTemplate](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/JuliaBesties/BestieTemplate.jl/main/docs/src/assets/badge.json)](https://github.com/JuliaBesties/BestieTemplate.jl)
 
+## Projected Dynamical Systems (PDS)
+
+Projected Dynamical Systems (PDS) extend classical dynamical systems by incorporating constraints that keep the system's state within a feasible set. The evolution of the system is described by:
+
+\[
+\dot{x}(t) = P_{T_C}(x(t), -F(x(t))),
+\]
+
+where:
+
+- \( x(t) \) is the state of the system at time \( t \),
+- \( F(x) \) is a vector field representing the dynamics (e.g., gradient, payoff vector),
+- \( P_{T_C} \) is the projection operator ensuring that \( x(t) \) remains in the feasible set \( C \).
+
+PDS is widely used in optimization, equilibrium modeling, and game theory to describe systems evolving under constraints. Applications include traffic flow, economic equilibria, and constrained optimization problems.
+
+This repository provides tools to simulate PDS, including discretized solutions and visualization of trajectories.
+
 ## How to Cite
 
 If you use NonSmoothDynamics.jl in your work, please cite using the reference given in [CITATION.cff](https://github.com/tmigot/NonSmoothDynamics.jl/blob/main/CITATION.cff).
