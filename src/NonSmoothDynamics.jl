@@ -1,10 +1,10 @@
 module NonSmoothDynamics
 
-using LinearAlgebra
+using LinearAlgebra, SparseArrays
 
 include("projection/project.jl")
 
-using ADNLSModel, NLPModelsIpopt
+using ADNLPModels, NLPModelsIpopt, Percival
 
 include("projection/numerical_projection.jl")
 include("projection/projection_plot.jl")
