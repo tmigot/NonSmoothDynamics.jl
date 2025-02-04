@@ -63,10 +63,10 @@ plot!(xlabel="x₁", ylabel="x₂", title="Projected Dynamical System Trajectory
 ## Plot interpolated trajectory
 
 ```@example ex1
-t_interp = collect(0:0.001:(num_iter * step_size))  # Fine-grained time vector
-x_interp = hcat([NonSmoothDynamics.interpolated_solution(t) for t in t_interp]...)
+#t_interp = collect(0:0.001:(num_iter * step_size))  # Fine-grained time vector
+#x_interp = hcat([NonSmoothDynamics.interpolated_solution(t) for t in t_interp]...)
 
-plot(box_x, box_y, label="Feasible Set [0, 1]^2", color=:blue)
-scatter!(x_vals[1, :], x_vals[2, :], label="Discrete Trajectory", color=:red, markersize=4)
-plot!(x_interp[1, :], x_interp[2, :], label="Interpolated Trajectory", color=:green, lw=2)
+#plot(box_x, box_y, label="Feasible Set [0, 1]^2", color=:blue)
+#scatter!(x_vals[1, :], x_vals[2, :], label="Discrete Trajectory", color=:red, markersize=4)
+#plot!(x_interp[1, :], x_interp[2, :], label="Interpolated Trajectory", color=:green, lw=2)
 ```
