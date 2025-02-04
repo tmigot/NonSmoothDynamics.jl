@@ -65,6 +65,7 @@ function projected_dynamical_system!(
   stop_first_stable::Bool = false,
 ) where {T1,T2}
   t_vals, x_vals = vals.t_vals, vals.x_vals
+
   # Initialize variables
   n0 = norm(x0)
   Fx = F(x0)
@@ -79,13 +80,24 @@ function projected_dynamical_system!(
   # Main loop
   for iter in eachindex(t_vals)
     if (iter == 1)
-      x_vals[:, iter] .= x0
-      # TODO: check that x0 is feasible
+      x_vals[:, iter] .= project_C(
+        x0;
+        step_size = step_size,
+        x = x0,
+        atol = atol,
+        rtol = rtol,
+        verbose = proj_verbose,
+      )
+      proj_success = 0
+      if norm(x_vals[:, iter] - x0) > atol + n0 * rtol
+        @warn "x0 is not feasible, project on C $(project_success) and continue."
+      end
       verbose > 0 && @info log_row(Any[iter, NaN, NaN, norm(Fx), 0])
       continue
     end
-    step_size = t_vals[iter] - t_vals[iter-1]
+
     # Compute the update step:
+    step_size = t_vals[iter] - t_vals[iter-1]
     proj_success = 0
     x_vals[:, iter] .= project_C(
       x_vals[:, iter-1] - step_size * Fx;
@@ -96,7 +108,7 @@ function projected_dynamical_system!(
       verbose = proj_verbose,
     )
 
-    # Check for convergence
+    # Check for stability
     xdiff = norm(x_vals[:, iter] - x_vals[:, iter-1])
     if stop_first_stable && (xdiff < atol + n0 * rtol)
       break
