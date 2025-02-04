@@ -16,7 +16,7 @@ subject to \(x \in [0, 1]^n\).
 F(x) = x .- 1.0
 
 # Define projection onto the box [0, 1]^2
-project_C(x) = clamp.(x, 0.0, 1.0)
+project_C(x; kwargs...) = clamp.(x, 0.0, 1.0; kwargs...)
 
 # Initial state
 x0 = [2.0, -1.0]
