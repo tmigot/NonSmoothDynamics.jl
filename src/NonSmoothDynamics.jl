@@ -15,6 +15,9 @@ using Interpolations
 include("interpolation.jl")
 
 include("utils.jl")
+
+using Logging, SolverCore
+
 include("pds.jl")
 
 end

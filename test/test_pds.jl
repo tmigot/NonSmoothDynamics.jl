@@ -11,4 +11,4 @@ x0 = project_C([2.0, -1.0])
 
 # Simulate the PDS
 x_vals, t_vals, converged =
-  NonSmoothDynamics.projected_dynamical_system(x0, F, project_C, 0.0, 1.0)
+  NonSmoothDynamics.projected_dynamical_system(x0, F, project_C, 0.0, 1.0, verbose = 1)
