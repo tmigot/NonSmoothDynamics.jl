@@ -13,7 +13,7 @@ Stau(x) = (S * tau(x))[:, 1]
 using NonSmoothDynamics
 
 project_C0(y; kwargs...) = NonSmoothDynamics.numerical_projection(
-  y, I, 
+  y, I,
   sparse(Q'), Q' * x0,
   spzeros(0, 2), ones(0),
   zeros(2), Inf * ones(2),
@@ -33,10 +33,10 @@ end
 # Simulate the PDS
 
 ```@example ex1
-x_vals, num_iter, converged = NonSmoothDynamics.projected_dynamical_system(x0, x -> Stau(x), project_intersection)
+x_vals, t_vals, converged = NonSmoothDynamics.projected_dynamical_system(x0, x -> Stau(x), project_intersection, 0.0, 1.0)
 
 println("Final State: ", x_vals[:, end])
-println("Converged: ", converged, " in ", num_iter, " iterations.")
+println("Converged: ", converged, " in ", length(t_vals), " iterations.")
 ```
 
 ## Visualization
@@ -57,14 +57,6 @@ scatter!([x_vals[1, end]], [x_vals[2, end]], label="Final Point", color=:purple,
 ```
 
 ```@example ex1
-t_interp = collect(0:0.001:(203 * 0.1))  # Fine-grained time vector
-x_interp = hcat([NonSmoothDynamics.interpolated_solution(t) for t in t_interp]...)
-
-step_size = 0.01
-num_iters = size(x_vals, 2) - 1
-t_interp = collect(0:step_size:(num_iters * step_size))  # Fine-grained time vector
-f = NonSmoothDynamics.get_interpolation(x0, x_vals, step_size, num_iters)
-
-plot(t_interp, x_vals[1, :], label="x₁ function of time", color=:red, markersize=4)
-plot!(t_interp, x_vals[2, :], label="x₂ function of time", color=:green, lw=2)
+plot(t_vals, x_vals[1, :], label="x₁ function of time", color=:red, markersize=4)
+plot!(t_vals, x_vals[2, :], label="x₂ function of time", color=:green, lw=2)
 ```
