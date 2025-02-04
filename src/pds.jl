@@ -54,7 +54,13 @@ function projected_dynamical_system(
   iter = 0
   for iter = 1:max_iter
     # Compute the update step:
-    x_new = project_C(x - step_size * F(x); step_size = step_size, x = x, atol = atol, rtol = rtol)
+    x_new = project_C(
+      x - step_size * F(x);
+      step_size = step_size,
+      x = x,
+      atol = atol,
+      rtol = rtol,
+    )
     push!(x_vals, x_new)
 
     # Check for convergence
