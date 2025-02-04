@@ -35,6 +35,7 @@ function boyle_dykstra(
   projections::Vector{Function};
   tol::Float64 = 1e-6,
   max_iter::Int = 1000,
+  kwargs...,
 )
   m = length(projections) # Number of projection functions
   x = copy(x0) # Current point
@@ -56,10 +57,9 @@ function boyle_dykstra(
 
     # Check for convergence
     if norm(x - x_old) < tol
-      return x, iter, true
+      return x
     end
   end
 
-  # If max iterations are reached without convergence
-  return x, max_iter, false
+  return x
 end

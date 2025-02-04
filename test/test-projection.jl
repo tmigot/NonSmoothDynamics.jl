@@ -66,17 +66,16 @@
 end
 
 # Define projection functions
-project_C1(x) = clamp.(x, 0.0, 1.0)    # Projection onto the box [0, 1]^n
-project_C2(x) = x ./ sum(x)            # Projection onto the simplex
+project_C1(x; kwargs...) = clamp.(x, 0.0, 1.0)    # Projection onto the box [0, 1]^n
+project_C2(x; kwargs...) = x ./ sum(x)            # Projection onto the simplex
 
 # Initial point
 x0 = [1.5, 2.0, -0.5]
 
 # Run the Boyle-Dykstra algorithm
-x, num_iter, converged = NonSmoothDynamics.boyle_dykstra(x0, [project_C1, project_C2])
+x = NonSmoothDynamics.boyle_dykstra(x0, [project_C1, project_C2])
 
 println("Projection: ", x)
-println("Converged: ", converged, " in ", num_iter, " iterations.")
 
 # Plot the box and simplex
 box_x = [0.0, 1.0, 1.0, 0.0, 0.0]

@@ -11,7 +11,7 @@ Projects a vector `x` onto the hyperplane defined by `a^T * x = b`.
 # Returns
 - `Vector{Float64}`: The projected vector.
 """
-function project_hyperplane(x::Vector{Float64}, a::Vector{Float64}, b::Float64)
+function project_hyperplane(x::Vector{Float64}, a::Vector{Float64}, b::Float64; kwargs...)
   return x - ((dot(a, x) - b) / dot(a, a)) * a
 end
 
@@ -28,7 +28,7 @@ Projects a vector `x` onto the ball centered at `c` with radius `r`.
 # Returns
 - `Vector{Float64}`: The projected vector.
 """
-function project_ball(x::Vector{Float64}, c::Vector{Float64}, r::Float64)
+function project_ball(x::Vector{Float64}, c::Vector{Float64}, r::Float64; kwargs...)
   dist = norm(x - c)
   return dist <= r ? x : c + r * (x - c) / dist
 end
@@ -46,7 +46,7 @@ Projects a vector `x` onto the box defined by lower bounds `l` and upper bounds 
 # Returns
 - `Vector{Float64}`: The projected vector.
 """
-function project_box(x::Vector{Float64}, l::Vector{Float64}, u::Vector{Float64})
+function project_box(x::Vector{Float64}, l::Vector{Float64}, u::Vector{Float64}; kwargs...)
   return clamp.(x, l, u)
 end
 
@@ -65,7 +65,7 @@ to meet the simplex constraints.
 # Returns
 - `Vector{Float64}`: The projected vector lying on the simplex.
 """
-function project_simplex(x::Vector{Float64})
+function project_simplex(x::Vector{Float64}; kwargs...)
   n = length(x)
   # Shift x by its average to simplify constraints
   offset = (sum(x) - 1) / n
@@ -98,7 +98,7 @@ Projects a vector `x` onto the L2 norm ball of radius `r`.
 # Returns
 - `Vector{Float64}`: The projected vector.
 """
-function project_l2_ball(x::Vector{Float64}, r::Float64)
+function project_l2_ball(x::Vector{Float64}, r::Float64; kwargs...)
   norm_x = norm(x)
   return norm_x <= r ? x : (r / norm_x) * x
 end
@@ -114,7 +114,7 @@ Projects a vector `x` onto the positive orthant (all elements >= 0).
 # Returns
 - `Vector{Float64}`: The projected vector.
 """
-function project_positive_orthant(x::Vector{Float64})
+function project_positive_orthant(x::Vector{Float64}; kwargs...)
   return max.(x, 0)
 end
 
@@ -131,6 +131,6 @@ Projects a vector `x` onto the half-space defined by `a^T * x <= b`.
 # Returns
 - `Vector{Float64}`: The projected vector.
 """
-function project_halfspace(x::Vector{Float64}, a::Vector{Float64}, b::Float64)
+function project_halfspace(x::Vector{Float64}, a::Vector{Float64}, b::Float64; kwargs...)
   return dot(a, x) <= b ? x : x - ((dot(a, x) - b) / dot(a, a)) * a
 end
