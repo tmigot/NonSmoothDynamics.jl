@@ -1,7 +1,7 @@
 using NonSmoothDynamics
 
 # Define the vector field F(x)
-F(x) = x .- 1.0
+F(x) = -(x .- 1.0)
 
 # Define projection onto the box [0, 1]^2
 project_C(x; kwargs...) = clamp.(x, 0.0, 1.0)

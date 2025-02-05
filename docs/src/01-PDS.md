@@ -13,7 +13,7 @@ subject to \(x \in [0, 1]^n\).
 
 ```@example ex1
 # Define the vector field F(x)
-F(x) = x .- 1.0
+F(x) = -(x .- 1.0)
 
 # Define projection onto the box [0, 1]^2
 function project_C(sol, x; kwargs...)
