@@ -16,7 +16,10 @@ subject to \(x \in [0, 1]^n\).
 F(x) = x .- 1.0
 
 # Define projection onto the box [0, 1]^2
-project_C(x; kwargs...) = clamp.(x, 0.0, 1.0)
+function project_C(sol, x; kwargs...)
+    sol .= clamp.(x, 0.0, 1.0)
+    return true
+end
 
 # Initial state
 x0 = [2.0, -1.0]
@@ -26,7 +29,8 @@ x0 = [2.0, -1.0]
 
 ```@example ex1
 # Initial state
-x0 = project_C([2.0, -1.0])
+x0 = Vector{Float64}(undef, 2)
+project_C(x0, [2.0, -1.0])
 
 using NonSmoothDynamics
 # Simulate the PDS
@@ -34,7 +38,6 @@ x_vals, t_vals, converged = NonSmoothDynamics.projected_dynamical_system(x0, F, 
 
 # Print results
 println("Final State: ", x_vals[:, end])
-println("Converged: ", converged, " in ", length(t_vals), " iterations.")
 ```
 
 ## Visualization

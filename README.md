@@ -17,7 +17,7 @@
 Projected Dynamical Systems (PDS) extend classical dynamical systems by incorporating constraints that keep the system's state within a feasible set. The evolution of the system is described by:
 
 \[
-\dot{x}(t) = P_{T_C}(x(t), -F(x(t))),
+\dot{x}(t) = P_{T_C}(x(t), F(x(t))),
 \]
 
 where:

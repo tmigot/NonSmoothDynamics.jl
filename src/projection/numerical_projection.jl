@@ -1,13 +1,15 @@
 """
-    numerical_projection(x::Vector{Float64}, Px::AbstractMatrix,
-                         Aeq::AbstractMatrix, beq::AbstractVector,
-                         Ain::AbstractMatrix, bin::AbstractVector,
-                         l::Vector{Float64}, u::Vector{Float64}) -> Vector{Float64}
+    numerical_projection!(sol::Vector{Float64},
+                          x::Vector{Float64}, Px::AbstractMatrix,
+                          Aeq::AbstractMatrix, beq::AbstractVector,
+                          Ain::AbstractMatrix, bin::AbstractVector,
+                          l::Vector{Float64}, u::Vector{Float64}) -> Vector{Float64}
 
 Computes the numerical projection of a vector `x` onto a constrained set defined by
 equality and inequality constraints, as well as variable bounds.
 
 # Arguments
+- `sol::Vector{Float64}`: The solution vector to be updated.
 - `x::AbstractVector`: The input vector to be projected.
 - `Px::AbstractMatrix`: Projection matrix.
 - `Aeq::AbstractMatrix`: Coefficient matrix for equality constraints Aeq x = beq.
@@ -39,7 +41,8 @@ proj_x = numerical_projection(x, Px, Aeq, beq, Ain, bin, l, u)
 println("Projected x: ", proj_x)
 ```
 """
-function numerical_projection(
+function numerical_projection!(
+  sol::S,
   x::S,
   Px = I,
   Aeq = spzeros(0, length(x)),
@@ -48,6 +51,8 @@ function numerical_projection(
   bin = ones(0),
   l = -Inf * ones(length(x)),
   u = Inf * ones(length(x));
+  atol = sqrt(eps(eltype(x))),
+  rtol = sqrt(eps(eltype(x))),
   kwargs...,
 ) where {S}
   n, m = length(x), length(bin)
@@ -72,8 +77,14 @@ function numerical_projection(
   )
 
   # Solve the problem using IPOPT
-  stats = percival(nls)
+  stats = percival(nls; atol = atol, rtol = rtol, kwargs...)
 
   # Return the projected solution
-  return stats.solution
+  sol .= stats.solution
+  OK = if stats.primal_feas == Inf
+    stats.status == :first_order
+  else
+    (norm(stats.primal_feas) < atol + norm(x) * rtol)
+  end
+  return OK
 end

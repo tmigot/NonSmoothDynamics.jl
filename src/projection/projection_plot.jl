@@ -2,7 +2,8 @@ using Plots
 
 # Function to plot projection onto a line or hyperplane
 function plot_hyperplane_projection(x::Vector{Float64}, a::Vector{Float64}, b::Float64)
-  proj_x = project_hyperplane(x, a, b)
+  proj_x = similar(x)
+  project_hyperplane!(proj_x, x, a, b)
 
   xs = range(-1, stop = 5, length = 100)
   ys = (b .- a[1] .* xs) ./ a[2]
@@ -15,7 +16,8 @@ end
 
 # Function to plot projection onto a ball
 function plot_ball_projection(x::Vector{Float64}, c::Vector{Float64}, r::Float64)
-  proj_x = project_ball(x, c, r)
+  proj_x = similar(x)
+  project_ball!(proj_x, x, c, r)
 
   θ = range(0, stop = 2π, length = 100)
   circle_x = r .* cos.(θ) .+ c[1]
@@ -29,7 +31,8 @@ end
 
 # Function to plot projection onto a box
 function plot_box_projection(x::Vector{Float64}, l::Vector{Float64}, u::Vector{Float64})
-  proj_x = project_box(x, l, u)
+  proj_x = similar(x)
+  project_box!(proj_x, x, l, u)
 
   box_x = [l[1], u[1], u[1], l[1], l[1]]
   box_y = [l[2], l[2], u[2], u[2], l[2]]
@@ -42,7 +45,8 @@ end
 
 # Function to plot projection onto a simplex
 function plot_simplex_projection(x::Vector{Float64})
-  proj_x = project_simplex(x)
+  proj_x = similar(x)
+  project_simplex!(proj_x, x)
 
   simplex_x = [1.0, 0.0, 0.0, 1.0]
   simplex_y = [0.0, 1.0, 0.0, 0.0]
