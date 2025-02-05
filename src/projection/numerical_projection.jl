@@ -24,8 +24,6 @@ equality and inequality constraints, as well as variable bounds.
 
 # Example
 ```julia
-using ADNLSModel, NLPModelsIpopt
-
 # Example data
 x   = [0.5, -1.0]
 Px  = I
@@ -76,8 +74,8 @@ function numerical_projection!(
     ucon,                                  # Combined upper constraint bounds
   )
 
-  # Solve the problem using IPOPT
-  stats = percival(nls; atol = atol, rtol = rtol, kwargs...)
+  # Solve the problem using JSOSuite
+  stats = minimize(nls; atol = atol, rtol = rtol, verbose = 0, kwargs...)
 
   # Return the projected solution
   sol .= stats.solution

@@ -4,7 +4,7 @@ using LinearAlgebra, SparseArrays
 
 include("projection/project.jl")
 
-using ADNLPModels, NLPModelsIpopt, Percival
+using ADNLPModels, JSOSuite, SolverCore
 
 include("projection/numerical_projection.jl")
 include("projection/projection_plot.jl")
@@ -16,7 +16,7 @@ include("interpolation.jl")
 
 include("utils.jl")
 
-using Logging, SolverCore
+using Logging
 
 include("pds.jl")
 
