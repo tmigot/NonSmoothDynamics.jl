@@ -5,7 +5,7 @@ One example is the study of nonsmooth dynamics in game theory.
 
 In [Migot, T., & Cojocaru, M. G. (2020). Nonsmooth dynamics of generalized Nash games. J. Nonlinear Var. Anal, 1(4), 27-44.](https://jnva.biemdas.com/issues/JNVA2020-1-4.pdf), the authors study a nonsmooth dynamics whose stable points are generalized Nash equilibrium for noncooperative games.
 
-![](./assets/GNEP.png)
+![Alt](./assets/GNEP.png "Example 6.1")
 
 ```@example ex1
 using LinearAlgebra, SparseArrays
@@ -38,7 +38,7 @@ function project_moving_set!(sol, y; x = x, kwargs...)
 end
 ```
 
-# Simulate the PDS
+## Simulate the PDS
 
 Run the reaction with 300 discretization point between 0 and 30.
 
