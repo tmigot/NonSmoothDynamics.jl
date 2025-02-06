@@ -16,17 +16,17 @@
 
 Projected Dynamical Systems (PDS) extend classical dynamical systems by incorporating constraints that keep the system's state within a feasible set. The evolution of the system is described by:
 
-\[
-\dot{x}(t) = P_{T_C}(x(t), F(x(t))),
-\]
+![Alt](./assets/PDS.png "PDS")
 
 where:
 
-- \( x(t) \) is the state of the system at time \( t \),
-- \( F(x) \) is a vector field representing the dynamics (e.g., gradient, payoff vector),
-- \( P_{T_C} \) is the projection operator ensuring that \( x(t) \) remains in the feasible set \( C \).
+- `x(t)` is the state of the system at time t,
+- `F(x)` is a vector field representing the dynamics (e.g., gradient, payoff vector),
+- `P_{T_C}` is the projection operator ensuring that `x(t)` remains in the feasible set `C`.
 
 PDS is widely used in optimization, equilibrium modeling, and game theory to describe systems evolving under constraints. Applications include traffic flow, economic equilibria, and constrained optimization problems.
+
+PDS are also highly connected with another nonsmooth dynamical system, the Moreau sweeping process.
 
 This repository provides tools to simulate PDS, including discretized solutions and visualization of trajectories.
 
