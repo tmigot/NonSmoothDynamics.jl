@@ -16,32 +16,36 @@ x_vals, t_vals, converged =
 
 # Example 2
 F(x) = -[
-    2 * x[1] + 8/3 * x[2] - 34;
-    2 * x[2] + 5/4 * x[1] - 24.25
+  2 * x[1] + 8 / 3 * x[2] - 34
+  2 * x[2] + 5 / 4 * x[1] - 24.25
 ]
 
 function project_moving_set!(sol, y; x = x, kwargs...)
-   λ = similar(sol)
-   Ain = [
+  λ = similar(sol)
+  Ain = [
     1 0.9
     0.9 1
-   ]
-   bin = [14.4; 14.1]
-   proj_success = NonSmoothDynamics.numerical_projection!(
-   λ, y, I,
-   spzeros(0, 2), ones(0),
-   Ain, bin,
-   zeros(2), Inf * ones(2))
-   sol .= λ
-   return proj_success
+  ]
+  bin = [14.4; 14.1]
+  proj_success = NonSmoothDynamics.numerical_projection!(
+    λ,
+    y,
+    I,
+    spzeros(0, 2),
+    ones(0),
+    Ain,
+    bin,
+    zeros(2),
+    Inf * ones(2),
+  )
+  sol .= λ
+  return proj_success
 end
 
 x0 = zeros(2)
 t0, tf = 0.0, 30.0
-x_vals, t_vals, converged = NonSmoothDynamics.projected_dynamical_system(
-  x0, F, project_moving_set!,
-  t0, tf, 300
-)
+x_vals, t_vals, converged =
+  NonSmoothDynamics.projected_dynamical_system(x0, F, project_moving_set!, t0, tf, 300)
 
 @test x_vals[:, end] ≈ [5, 9]
 
@@ -58,33 +62,52 @@ Q = [1 1]' # (nx(n-m)) matrix
 
 # Reaction rate
 tau(x; kr = 1, kp = 2) = kr * x[1] - kp # size m
-Stau(x) = (S * tau(x))[:, 1]
+Stau(x) = (S*tau(x))[:, 1]
 
 project_C0!(sol, y; kwargs...) = NonSmoothDynamics.numerical_projection!(
-  sol, y, I,
-  sparse(Q'), Q' * x0, # satisfy conservation equation
-  spzeros(0, n), ones(0),
-  zeros(n), Inf * ones(n), # non-negative
+  sol,
+  y,
+  I,
+  sparse(Q'),
+  Q' * x0, # satisfy conservation equation
+  spzeros(0, n),
+  ones(0),
+  zeros(n),
+  Inf * ones(n), # non-negative
 )
 function project_rate!(sol, y; step_size = step_size, x = x, kwargs...)
-   λ = similar(sol)
-   proj_success = NonSmoothDynamics.numerical_projection!(
-   λ, y, diagm(0 => Stau(x)),
-   spzeros(0, 2), ones(0),
-   spzeros(0, 2), ones(0),
-   zeros(2), ones(2))
-   sol .= x + step_size * diagm(0 => Stau(x)) * λ
-   return proj_success
+  λ = similar(sol)
+  proj_success = NonSmoothDynamics.numerical_projection!(
+    λ,
+    y,
+    diagm(0 => Stau(x)),
+    spzeros(0, 2),
+    ones(0),
+    spzeros(0, 2),
+    ones(0),
+    zeros(2),
+    ones(2),
+  )
+  sol .= x + step_size * diagm(0 => Stau(x)) * λ
+  return proj_success
 end
 function project_intersection!(sol, y; step_size = step_size, x = x, kwargs...)
   return NonSmoothDynamics.boyle_dykstra!(
-    sol, y,
-    [project_C0!, (sol, y; kwargs...) -> project_rate!(sol, y, step_size = step_size, x = x, kwargs...)],
-)
+    sol,
+    y,
+    [
+      project_C0!,
+      (sol, y; kwargs...) -> project_rate!(sol, y, step_size = step_size, x = x, kwargs...),
+    ],
+  )
 end
 
 x_vals, t_vals, converged = NonSmoothDynamics.projected_dynamical_system(
-  x0, x -> Stau(x), project_intersection!,
-  0.0, 2.0, 100; # run the reaction with 100 discretization point between 0 and 2.
-  project_x0 = false
+  x0,
+  x -> Stau(x),
+  project_intersection!,
+  0.0,
+  2.0,
+  100; # run the reaction with 100 discretization point between 0 and 2.
+  project_x0 = false,
 )

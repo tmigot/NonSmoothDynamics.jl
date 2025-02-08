@@ -3,11 +3,13 @@
 ## Problem definition
 
 Let’s minimize the function:
+
 ```math
 \begin{aligned}
 f(x) = \frac{1}{2} \|x - 1\|^2_2,
 \end{aligned}
 ```
+
 subject to $x \in [0, 1]^n$.
 
 - **Gradient:** $F(x) = \nabla f(x) = x - 1$.
