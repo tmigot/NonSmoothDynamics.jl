@@ -5,7 +5,7 @@ One example is the study of nonsmooth dynamics in game theory.
 
 In [Migot, T., & Cojocaru, M. G. (2020). Nonsmooth dynamics of generalized Nash games. J. Nonlinear Var. Anal, 1(4), 27-44.](https://jnva.biemdas.com/issues/JNVA2020-1-4.pdf), the authors study a nonsmooth dynamics whose stable points are generalized Nash equilibrium for noncooperative games.
 
-![Alt](./assets/GNEP.png "Example 6.1")
+!["Example 6.1"](./assets/GNEP.png)
 
 ```@example ex1
 using LinearAlgebra, SparseArrays

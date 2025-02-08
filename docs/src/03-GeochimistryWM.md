@@ -6,7 +6,7 @@ reaction can include several minerals and one mineral can participate in several
 
 The article [Erhel, J., Hamlat, B., & Migot, T. (2024). A projected dynamical system approach to mineral precipitation-dissolution reactions in geochemistry.](https://inria.hal.science/hal-04631094/file/Chapitre3_article.pdf) introduces a PDS model for this type of reaction involving a constraints on the reaction rate.
 
-![Alt](./assets/Geochemistry-model.png "PDS in geochemistry")
+!["PDS in geochemistry"](./assets/Geochemistry-model.png)
 
 ```@example ex1
 using LinearAlgebra, SparseArrays
@@ -16,7 +16,7 @@ using Plots
 
 The first example is a single reaction with an aqueous species W and a mineral species M
 
-![Alt](./assets/Geochemistry-WM.png "Equation W->M")
+!["Equation W->M"](./assets/Geochemistry-WM.png)
 
 First, define constants relative to this example.
 
