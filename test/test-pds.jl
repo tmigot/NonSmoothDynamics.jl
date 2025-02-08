@@ -6,8 +6,8 @@ F(x) = -(x .- 1.0)
 
 # Define projection onto the box [0, 1]^2
 function project_C(sol, x; kwargs...)
-    sol .= clamp.(x, 0.0, 1.0)
-    return true
+  sol .= clamp.(x, 0.0, 1.0)
+  return true
 end
 
 # Initial state
@@ -19,7 +19,8 @@ project_C(x0, [2.0, -1.0])
 
 using NonSmoothDynamics
 # Simulate the PDS
-x_vals, t_vals, converged = NonSmoothDynamics.projected_dynamical_system(x0, F, project_C, 0.0, 1.0)
+x_vals, t_vals, converged =
+  NonSmoothDynamics.projected_dynamical_system(x0, F, project_C, 0.0, 1.0)
 
 # Example 2
 F2(x) = -[

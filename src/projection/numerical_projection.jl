@@ -64,7 +64,7 @@ function numerical_projection!(
   # Define the non-linear least squares model
   nls = ADNLSModel(
     d -> Px * x - d,                       # Objective: minimize distance to x
-    x,                                     # Initial guess
+    Px * x,                                # Initial guess
     n,                                     # Number of variables
     l,                                     # Variable lower bounds
     u,                                     # Variable upper bounds
