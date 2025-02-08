@@ -23,11 +23,8 @@ F(x) = -[
 
 function project_moving_set!(sol, y; x = x, kwargs...)
    λ = similar(sol)
-   Ain = [
-    1 0.9
-    0.9 1
-   ]
-   bin = [14.4; 14.1]
+   Ain = I
+   bin = [14.4 - 0.9 * x[2]; 14.1 - 0.9 * x[1]]
    proj_success = NonSmoothDynamics.numerical_projection!(
    λ, y, I,
    spzeros(0, 2), ones(0),
