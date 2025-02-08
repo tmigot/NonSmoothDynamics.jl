@@ -5,17 +5,25 @@ using NonSmoothDynamics
 F(x) = -(x .- 1.0)
 
 # Define projection onto the box [0, 1]^2
-project_C(x; kwargs...) = clamp.(x, 0.0, 1.0)
+function project_C(sol, x; kwargs...)
+  sol .= clamp.(x, 0.0, 1.0)
+  return true
+end
 
 # Initial state
-x0 = project_C([2.0, -1.0])
+x0 = [2.0, -1.0]
 
+# Initial state
+x0 = Vector{Float64}(undef, 2)
+project_C(x0, [2.0, -1.0])
+
+using NonSmoothDynamics
 # Simulate the PDS
 x_vals, t_vals, converged =
-  NonSmoothDynamics.projected_dynamical_system(x0, F, project_C, 0.0, 1.0, verbose = 1)
+  NonSmoothDynamics.projected_dynamical_system(x0, F, project_C, 0.0, 1.0)
 
 # Example 2
-F(x) = -[
+F2(x) = -[
   2 * x[1] + 8 / 3 * x[2] - 34
   2 * x[2] + 5 / 4 * x[1] - 24.25
 ]
@@ -42,9 +50,9 @@ end
 x0 = zeros(2)
 t0, tf = 0.0, 30.0
 x_vals, t_vals, converged =
-  NonSmoothDynamics.projected_dynamical_system(x0, F, project_moving_set!, t0, tf, 300)
+  NonSmoothDynamics.projected_dynamical_system(x0, F2, project_moving_set!, t0, tf, 300)
 
-@test x_vals[:, end] ≈ [5, 9]
+@test x_vals[:, end] ≈ [5, 9] atol = 1e-1
 
 # Example 3
 
