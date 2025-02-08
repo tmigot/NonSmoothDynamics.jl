@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Projected dynamical system with constraints on derivative · NonSmoothDynamics.jl</title><meta name="title" content="Projected dynamical system with constraints on derivative · NonSmoothDynamics.jl"/><meta property="og:title" content="Projected dynamical system with constraints on derivative · NonSmoothDynamics.jl"/><meta property="twitter:title" content="Projected dynamical system with constraints on derivative · NonSmoothDynamics.jl"/><meta name="description" content="Documentation for NonSmoothDynamics.jl."/><meta property="og:description" content="Documentation for NonSmoothDynamics.jl."/><meta property="twitter:description" content="Documentation for NonSmoothDynamics.jl."/><meta property="og:url" content="https://tmigot.github.io/NonSmoothDynamics.jl/03-GeochimistryWM/"/><meta property="twitter:url" content="https://tmigot.github.io/NonSmoothDynamics.jl/03-GeochimistryWM/"/><link rel="canonical" href="https://tmigot.github.io/NonSmoothDynamics.jl/03-GeochimistryWM/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">NonSmoothDynamics.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">NonSmoothDynamics</a></li><li><a class="tocitem" href="../01-PDS/">Projected dynamical system for Optimization</a></li><li><a class="tocitem" href="../02-MovingSet/">Projected dynamical system with moving set</a></li><li class="is-active"><a class="tocitem" href>Projected dynamical system with constraints on derivative</a><ul class="internal"><li><a class="tocitem" href="#Simulate-the-PDS"><span>Simulate the PDS</span></a></li><li><a class="tocitem" href="#Visualization"><span>Visualization</span></a></li></ul></li><li><a class="tocitem" href="../90-contributing/">Contributing guidelines</a></li><li><a class="tocitem" href="../91-developer/">Developer documentation</a></li><li><a class="tocitem" href="../95-reference/">Reference</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Projected dynamical system with constraints on derivative</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Projected dynamical system with constraints on derivative</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/tmigot/NonSmoothDynamics.jl/blob/main/docs/src/03-GeochimistryWM.md#" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Projected-dynamical-system-with-constraints-on-derivative"><a class="docs-heading-anchor" href="#Projected-dynamical-system-with-constraints-on-derivative">Projected dynamical system with constraints on derivative</a><a id="Projected-dynamical-system-with-constraints-on-derivative-1"></a><a class="docs-heading-anchor-permalink" href="#Projected-dynamical-system-with-constraints-on-derivative" title="Permalink"></a></h1><p>In this tutorial, we present another application of PDS in geochemical system with precipitation-dissolution reactions. Ordinary differential equations are very often used to model aqueous reactions. However, non smoothness is induced by full dissolution. Moreover, one reaction can include several minerals and one mineral can participate in several reactions.</p><p>The article <a href="https://inria.hal.science/hal-04631094/file/Chapitre3_article.pdf">Erhel, J., Hamlat, B., &amp; Migot, T. (2024). A projected dynamical system approach to mineral precipitation-dissolution reactions in geochemistry.</a> introduces a PDS model for this type of reaction involving a constraints on the reaction rate.</p><p><img src="../assets/Geochemistry-model.png" alt="&quot;PDS in geochemistry&quot;"/></p><pre><code class="language-julia hljs">using LinearAlgebra, SparseArrays
+using NonSmoothDynamics
+using Plots</code></pre><p>The first example is a single reaction with an aqueous species W and a mineral species M</p><p><img src="../assets/Geochemistry-WM.png" alt="&quot;Equation W-&gt;M&quot;"/></p><p>First, define constants relative to this example.</p><pre><code class="language-julia hljs">x0 = [1; 0.5]
+n = length(x0) # number of species
+m = 2 # number of reactions
+
+# Stoichiometry matrix
+S = [-1 1]&#39; # (nxm) matrix
+# Matrix of conservation
+Q = [1 1]&#39; # (nx(n-m)) matrix
+
+# Reaction rate
+tau(x; kr = 1, kp = 2) = kr * x[1] - kp # size m
+Stau(x) = (S * tau(x))[:, 1]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Stau (generic function with 1 method)</code></pre><p>Then, define the projection operator.</p><pre><code class="language-julia hljs">project_C0!(sol, y; kwargs...) = NonSmoothDynamics.numerical_projection!(
+  sol, y, I,
+  sparse(Q&#39;), Q&#39; * x0, # satisfy conservation equation
+  spzeros(0, n), ones(0),
+  zeros(n), Inf * ones(n), # non-negative
+)
+function project_rate!(sol, y; step_size = step_size, x = x, kwargs...)
+   λ = similar(sol)
+   proj_success = NonSmoothDynamics.numerical_projection!(
+   λ, y, diagm(0 =&gt; Stau(x)),
+   spzeros(0, 2), ones(0),
+   spzeros(0, 2), ones(0),
+   zeros(2), ones(2))
+   sol .= x + step_size * diagm(0 =&gt; Stau(x)) * λ
+   return proj_success
+end
+function project_intersection!(sol, y; step_size = step_size, x = x, kwargs...)
+  return NonSmoothDynamics.boyle_dykstra!(
+    sol, y,
+    [project_C0!, (sol, y; kwargs...) -&gt; project_rate!(sol, y, step_size = step_size, x = x, kwargs...)],
+)
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">project_intersection! (generic function with 1 method)</code></pre><h2 id="Simulate-the-PDS"><a class="docs-heading-anchor" href="#Simulate-the-PDS">Simulate the PDS</a><a id="Simulate-the-PDS-1"></a><a class="docs-heading-anchor-permalink" href="#Simulate-the-PDS" title="Permalink"></a></h2><pre><code class="language-julia hljs">x_vals, t_vals, converged = NonSmoothDynamics.projected_dynamical_system(
+  x0, x -&gt; Stau(x), project_intersection!,
+  0.0, 2.0, 100; # run the reaction with 100 discretization point between 0 and 2.
+  project_x0 = false
+)
+
+println(&quot;Final State: &quot;, x_vals[:, end])</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+┌ Warning: Projection failed
+└ @ NonSmoothDynamics ~/work/NonSmoothDynamics.jl/NonSmoothDynamics.jl/src/pds.jl:126
+Final State: [1.5000485179818897, 2.395467983836329e-12]</code></pre><h2 id="Visualization"><a class="docs-heading-anchor" href="#Visualization">Visualization</a><a id="Visualization-1"></a><a class="docs-heading-anchor-permalink" href="#Visualization" title="Permalink"></a></h2><p>To plot the trajectory:</p><pre><code class="language-julia hljs">using Plots
+
+plot(t_vals, x_vals[1, :], label=&quot;x₁ function of time&quot;, color=:red, markersize=4)
+plot!(t_vals, x_vals[2, :], label=&quot;x₂ function of time&quot;, color=:green, lw=2)</code></pre><img src="5be080ce.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../02-MovingSet/">« Projected dynamical system with moving set</a><a class="docs-footer-nextpage" href="../90-contributing/">Contributing guidelines »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Saturday 8 February 2025 02:04">Saturday 8 February 2025</span>. Using Julia version 1.11.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
