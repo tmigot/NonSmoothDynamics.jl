@@ -14,10 +14,10 @@ SolverCore = "ff4d7338-4cf1-434d-91df-b86cb86fb843"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [compat]
-julia = "1.10"
 ADNLPModels = "0.8"
 Interpolations = "0.15"
-JSOSuite = "0.2"
+JSOSuite = "0.2, 0.3"
 Plots = "1"
 SolverCore = "0.3"
 SparseArrays = "1"
+julia = "1.10"
